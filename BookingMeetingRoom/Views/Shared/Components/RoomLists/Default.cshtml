@@ -1,0 +1,20 @@
+﻿@model BookingMeetingRoom.ViewModels.RoomListsViewModel
+<div class="dropdown">
+    <a class="nav-link btn btn-link text-navi dropdown-toggle mx-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-door-open-fill"></i> Room
+    </a>
+
+    <ul class="dropdown-menu">
+        @foreach (var item in Model.RoomLists)
+        {
+            <li>
+                <a class="dropdown-item" 
+                    asp-controller="Room" 
+                    asp-action="Index" 
+                    asp-route-id="@item.RoomId">
+                    <i class="bi bi-door-open text-navi"></i> @item.RoomName
+                </a>
+            </li>
+        }
+    </ul>
+</div>

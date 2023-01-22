@@ -1,0 +1,260 @@
+﻿@model BookingMeetingRoom.ViewModels.RoomViewModel
+@{
+    ViewData["Title"] = "Room";
+}
+
+<div class="row text-center">
+    <div class="form-group">
+        <h2 class="main-gradient-t">
+            <strong>
+                <i class="bi bi-door-open text-success"></i> @Model.RoomName
+            </strong>
+        </h2>
+    </div>
+</div>
+<div class="row mt-3 rounded shadow p-4">
+    <div class="col-lg-4 col-sm-12">
+        <div class="row justify-content-center">
+            <div class="list-group col-12">
+                <label class="list-group-item d-flex">
+                    <span class="pt-1 form-checked-content">
+                        <i class="bi bi-door-open text-success"></i> <strong>Room Name</strong>
+                        <small class="d-block text-muted">
+                            <svg class="bi me-1" width="1rem" height="1em"><use xlink:href="#calendar-event"></use></svg>
+                            @Model.RoomName
+                        </small>
+                    </span>
+                </label>
+                <label class="list-group-item d-flex">
+                    <span class="pt-1 form-checked-content">
+                        <i class="bi bi-clock text-secondary"></i> <strong>Book Time</strong>
+                        <small class="d-block text-muted">
+                            <svg class="bi me-1" width="1rem" height="1em"></svg>
+                            @Model.AvailableBookDay
+                        </small>
+                        <small class="d-block text-muted">
+                            <svg class="bi me-1" width="1rem" height="1em"></svg>
+                            @Model.AvailableFrom - @Model.AvailableTo
+                        </small>
+                    </span>
+                </label>
+                <label class="list-group-item d-flex">
+                    <span class="pt-1 form-checked-content">
+                        <i class="bi bi-person-circle text-danger"></i> <strong>Seat</strong>
+                        <small class="d-block text-muted">
+                            <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar-event"></use></svg>
+                            @Model.Seat persons
+                        </small>
+                    </span>
+                </label>
+                <label class="list-group-item d-flex gap-3">
+                    <span class="pt-1 form-checked-content">
+                        <i class="bi bi-box-seam text-warning"></i> <strong>Facilities</strong>
+                        <small class="d-block text-muted">
+                            <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#alarm"></use></svg>
+                            @Model.Facilities
+                        </small>
+                    </span>
+                </label>
+                <label class="list-group-item d-flex gap-3">
+                    <span class="pt-1 form-checked-content">
+                        <i class="bi bi-building text-info"></i> <strong>Floor</strong>
+                        <small class="d-block text-muted">
+                            <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#list-check"></use></svg>
+                            @Model.Floor
+                        </small>
+                    </span>
+                </label>
+                <label class="list-group-item d-flex gap-3">
+                    <span class="pt-1 form-checked-content">
+                        <i class="bi bi-chat-text-fill text-warning"></i> <strong>Remark</strong>
+                        <small class="d-block text-muted">
+                            <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#list-check"></use></svg>
+                            @Model.Remark
+                        </small>
+                    </span>
+                </label>
+                <label class="list-group-item d-flex gap-3">
+                    <span class="pt-1 form-checked-content">
+                        <i class="bi bi-patch-question text-primary"></i> <strong>Status</strong>
+                        <small class="d-block text-muted">
+                            <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#list-check"></use></svg>
+                            @Model.Status
+                        </small>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="row justify-content-center mt-3 mb-3">
+                    <div class="form-group">
+                        <a asp-controller="Room" 
+                           asp-action="Edit" 
+                           asp-route-id="@Model.RoomId"
+                           class="badge rounded-pill btn btn-warning fs-6">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <a asp-controller="Room"
+                            asp-action="Create"
+                            class="badge rounded-pill btn btn-success fs-6">
+                            <i class="bi bi-plus-circle-dotted"></i> Create
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        
+    </div>
+    <div class="col-lg-8 col-sm-12">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/images/carouse1.jpg" class="img-fluid d-flex w-100 h-50" alt="..." />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>@Model.RoomName</h5>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
+
+<div class="row justify-content-center mt-4">
+    <div class="col-lg-12 col-md-12 col-sm-12 rounded-3 shadow p-4">
+        <div id='calendar'></div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+	    var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+	
+		$('#external-events div.external-event').each(function() {
+		
+			var eventObject = {
+				title: $.trim($(this).text())
+			};
+			
+			$(this).data('eventObject', eventObject);
+			
+			$(this).draggable({
+				zIndex: 999,
+				revert: true,
+				revertDuration: 0 
+			});
+			
+		});
+	
+		
+		var calendar =  $('#calendar').fullCalendar({
+			header: {
+				left: 'title',
+				center: '',
+				right: 'prev,next today'
+			},
+			editable: true,
+			firstDay: 1,
+			selectable: true,
+			defaultView: 'month',
+			
+			axisFormat: 'h:mm',
+			columnFormat: {
+                month: 'ddd',
+                week: 'ddd d',
+                day: 'dddd M/d',
+                agendaDay: 'dddd d'
+            },
+            titleFormat: {
+                month: 'MMMM yyyy',
+                week: "MMMM yyyy",
+                day: 'MMMM yyyy'
+            },
+			allDaySlot: false,
+			selectHelper: true,
+			select: function(start, end, allDay) {
+				
+				calendar.fullCalendar('unselect');
+			},
+			droppable: true,
+			drop: function(date, allDay) { 
+			
+				var originalEventObject = $(this).data('eventObject');
+				
+				var copiedEventObject = $.extend({}, originalEventObject);
+			
+				copiedEventObject.start = date;
+				copiedEventObject.allDay = allDay;
+				
+				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+				
+				// is the "remove after drop" checkbox checked?
+				if ($('#drop-remove').is(':checked')) {
+					// if so, remove the element from the "Draggable Events" list
+					$(this).remove();
+				}
+				
+			},
+			
+			events: [
+				{
+					title: 'All Day Event',
+					start: new Date(y, m, 1)
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: new Date(y, m, d-3, 16, 0),
+					allDay: false,
+					className: 'info'
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: new Date(y, m, d+4, 16, 0),
+					allDay: false,
+					className: 'info'
+				},
+				{
+					title: 'Meeting',
+					start: new Date(y, m, d, 10, 30),
+					allDay: false,
+					className: 'important'
+				},
+				{
+					title: 'Lunch',
+					start: new Date(y, m, d, 12, 0),
+					end: new Date(y, m, d, 14, 0),
+					allDay: false,
+					className: 'important'
+				},
+				{
+					title: 'Birthday Party',
+					start: new Date(y, m, d+1, 19, 0),
+					end: new Date(y, m, d+1, 22, 30),
+					allDay: false,
+				},
+				{
+					title: 'Click for Google',
+					start: new Date(y, m, 28),
+					end: new Date(y, m, 29),
+					url: 'https://ccp.cloudaccess.net/aff.php?aff=5188',
+					className: 'success'
+				}
+			],			
+		});
+	});
+</script>

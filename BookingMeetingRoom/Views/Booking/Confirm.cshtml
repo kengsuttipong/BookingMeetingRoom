@@ -1,0 +1,223 @@
+﻿@model BookingMeetingRoom.ViewModels.BookingIndexViewModel
+
+@{
+    ViewData["Title"] = "Confirm Page";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12 col-sm-12">
+            <h3 class="text-uppercase fw-bold blog-graphic-text col-2">
+                <i class="bi bi-check-circle"></i> Confirm
+            </h3>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-12 col-sm-12 m-3">
+            <form asp-controller="Booking" asp-action="ConfirmProcess">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="RoomId" />
+                <input type="hidden" asp-for="BookingDate" />
+                <input type="hidden" asp-for="BookingStartTime" />
+                <input type="hidden" asp-for="BookingEndTime" />
+                <input type="hidden" asp-for="Objective" />
+
+                <div class="row rounded-3 shadow-lg p-1">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-12">
+                                <img src="~/images/carouse1.jpg" class="img-fluid rounded-start" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <strong class="text-navi">
+                        <i class="bi bi-person-lines-fill"></i> Contact Information
+                    </strong>
+                </div>
+                <div class="row rounded-3 shadow-lg p-4 mt-2 justify-content-center">
+                    <div class="row mt-1">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label asp-for="FullName" class="control-label">
+                                <i class="bi bi-calendar3-week text-success"></i>
+                                <strong>Name</strong>
+                            </label>
+                            <input type="text" id="txtFullName" asp-for="FullName" class="form-control" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <label asp-for="Email" class="control-label">
+                                <i class="bi bi-envelope text-danger"></i>
+                                <strong>Email</strong>
+                            </label>
+                            <input type="text" asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <label asp-for="PhoneNumber" class="control-label">
+                                <i class="bi bi-telephone text-info"></i>
+                                <strong>Phone Number</strong>
+                            </label>
+                            <input type="text" id="txtPhoneNumber" asp-for="PhoneNumber" class="form-control" />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <label asp-for="Position" class="control-label">
+                                <i class="bi bi-card-heading"></i>
+                                <strong>Position</strong>
+                            </label>
+                            <input type="text" asp-for="Position" class="form-control" readonly />
+                            <span asp-validation-for="Position" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                            <label asp-for="Department" class="control-label">
+                                <i class="bi bi-building"></i>
+                                <strong>Department</strong>
+                            </label>
+                            <input type="text" id="txtDepartment" asp-for="Department" class="form-control" readonly />
+                            <span asp-validation-for="Department" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row rounded-3 m-3 justify-content-center" style="background-color: rgb(246, 246, 246);">
+                            <div class="col-5 m-2 text-center">
+                                <input type="radio" class="form-check-input" name="BookingFor" value="_myself" checked />
+                                <strong>
+                                    Book for myself
+                                </strong>
+                            </div>
+                            <div class="col-5 m-2 text-center">
+                                <input type="radio" class="form-check-input" name="BookingFor" value="_myteam" />
+                                <strong>
+                                    Book for my team
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <div class="row justify-content-center mt-3">
+                    <div class="col-md-12 text-end my-auto">
+                        <button type="submit" class="btn btn-outline-success">
+                            <i class="bi bi-check-circle"></i> Confirm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 m-3" style="height: fit-content;">
+            <div class="row rounded-3 shadow-lg p-2 justify-content-center">
+                <div class="row">
+                    <h5 class="card-title text-navi">
+                        <i class="bi bi-door-open text-secondary"></i>
+                        <strong>@Model.RoomName</strong>
+                    </h5>
+                </div>
+                <div class="row mt-3" style="background-color: rgba(247,249,250,1.00);">
+                    <div class="row">
+                        <div class="col-5">
+                            <small>Check in</small>
+                        </div>
+                        <div class="col-7">
+                            <small>
+                                @Model.BookingDate.ToString("ddd, dd MMM yyyy"), @Model.BookingStartTime.ToString()
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <small>
+                                Check out
+                            </small>
+                        </div>
+                        <div class="col-7">
+                            <small>
+                                @Model.BookingDate.ToString("ddd, dd MMM yyyy"), @Model.BookingEndTime.ToString()
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <small class="card-text">
+                        <i class="bi bi-person-circle text-danger"></i>
+                        Seat : @Model.Seat
+                    </small>
+                </div>
+                <div class="row">
+                    <small class="card-text">
+                        <i class="bi bi-box-seam text-warning"></i>
+                        Facilities : @Model.RoomFacilities
+                    </small>
+                </div>
+                <div class="row">
+                    <small class="card-text">
+                        <i class="bi bi-building text-info"></i>
+                        Floor : @Model.RoomFloor
+                    </small>
+                </div>
+                <div class="row">
+                    <small class="card-text">
+                        <i class="bi bi-chat-text-fill text-warning"></i>
+                        Remark : @Model.Remark
+                    </small>
+                </div>
+            </div>
+            <div class="row rounded-3 shadow-lg p-2 mt-4 justify-content-center">
+                <div class="row">
+                    <h6 class="card-title text-navi">
+                        <i class="bi bi-box-seam"></i>
+                        <strong>Objective</strong>
+                    </h6>
+                </div>
+                <div class="row my-2">
+                    <small class="card-text">
+                        @Model.ObjectiveText
+                    </small>
+                </div>
+                @if (!string.IsNullOrEmpty(@Model.MoreRequest))
+                {
+                    <div class="row border-top">
+                        <h6 class="card-title text-navi mt-2">
+                            <i class="bi bi-question-square"></i>
+                            <strong>More Request</strong>
+                        </h6>
+                    </div>
+                    <div class="row my-2">
+                        <small class="card-text">
+                            @Model.MoreRequest
+                        </small>
+                    </div>
+                }
+            </div>            
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<link href="~/lib/sweetalert2.min.css" rel="stylesheet" />
+<script src="~/lib/sweetalert2.min.js"></script>
+
+@if (ViewBag.JavaScriptFunction != null)
+{
+    <script type="text/javascript">
+        @Html.Raw(ViewBag.JavaScriptFunction)
+    </script>
+}
+
+<script type="text/javascript">
+
+    function mySweetAlert(title, text, icon, width) {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showCancelButton: false,
+            width: width,
+        });
+    }
+
+</script>

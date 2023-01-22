@@ -1,0 +1,256 @@
+﻿@model BookingMeetingRoom.ViewModels.RoomViewModel
+@{
+    ViewData["Title"] = "Edit Room";
+}
+
+<div class="row text-center">
+    <div class="form-group">
+        <h2 class="main-gradient-t">
+            <strong>
+                <i class="bi bi-door-open text-success"></i> @Model.RoomName
+            </strong>
+        </h2>
+    </div>
+</div>
+<div class="row mt-3 rounded shadow p-4 justify-content-center">
+    <div class="col-lg-8 col-md-10 col-sm-12 text-center">
+        <div class="row">
+            <img src="~/images/roomcartoon.jpg" class="img-fluid rounded" />
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-10 col-sm-12 mt-5">
+        <form asp-controller="Room" asp-action="Edit" asp-route-id="@Model.RoomId">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" id="hidRoomId" asp-for="RoomId" />
+            <input type="hidden" id="hidAvailableDayId" asp-for="AvailableBookDayId" />
+            <input type="hidden" id="hidFacilitiesId" asp-for="FacilitiesId" />
+            <div class="row">
+                <div class="form-group">
+                    <label asp-for="RoomName" class="control-label">
+                        <i class="bi bi-door-open text-success"></i>  
+                        <strong>Room Name</strong>
+                    </label>
+                    <input asp-for="RoomName" class="form-control" id="txtRoomName" />
+                    <span asp-validation-for="RoomName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <label asp-for="AvailableBookDay" class="control-label">
+                        <i class="bi bi-clock text-secondary"></i> 
+                        <strong>Available Book Day</strong>
+                    </label>
+                    <select asp-for="AvailableBookDay" class="form-control" multiple="multiple" 
+                                size="7" id="ddlAvailableBookDay" asp-items="ViewBag.DayOfWeekLists">
+                    </select>
+                    <span asp-validation-for="AvailableBookDay" class="text-danger"></span>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <label asp-for="AvailableFrom" class="control-label">
+                        <i class="bi bi-clock text-secondary"></i>
+                        <strong>Available From</strong>
+                    </label>
+                    <input asp-for="AvailableFrom" type="time" class="form-control" id="txtAvailableFrom" />
+                    <span asp-validation-for="AvailableFrom" class="text-danger"></span>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <label asp-for="AvailableTo" class="control-label">
+                        <i class="bi bi-clock text-secondary"></i>
+                        <strong>Available To</strong>
+                    </label>
+                    <input asp-for="AvailableTo" type="time" class="form-control" id="txtAvailableTo" />
+                    <span asp-validation-for="AvailableTo" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <label asp-for="Facilities" class="control-label">
+                        <i class="bi bi-box-seam text-warning"></i> 
+                        <strong>Facilities</strong>
+                    </label>
+                    <select asp-for="Facilities" class="form-control" multiple="multiple"
+                            id="ddlFacilities" asp-items="ViewBag.FacilitiesLists">
+                    </select>
+                    <span asp-validation-for="Facilities" class="text-danger"></span>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <label asp-for="Seat" class="control-label">
+                        <i class="bi bi-person-circle text-danger"></i> 
+                        <strong>Seat</strong>
+                    </label>
+                    <input asp-for="Seat" class="form-control" type="number" id="txtSeat" />
+                    <span asp-validation-for="Seat" class="text-danger"></span>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <label asp-for="FloorID" class="control-label">
+                        <i class="bi bi-building text-info"></i> 
+                        <strong>Floor</strong>
+                    </label>
+                    <select asp-for="FloorID" class="form-control" asp-items="ViewBag.FloorLists" id="ddlFloor"></select>
+                    <span asp-validation-for="FloorID" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="form-group">
+                    <label asp-for="Remark" class="control-label">
+                        <i class="bi bi-chat-text-fill text-warning"></i> 
+                        <strong>Remark</strong>
+                    </label>
+                    <textarea asp-for="Remark" class="form-control" rows="5" id="txtRemark"></textarea>
+                    <span asp-validation-for="Remark" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="form-group">
+                    <label class="form-check-label" asp-for="StatusID">
+                        <i class="bi bi-patch-question text-primary"></i> 
+                        <strong>Status</strong>
+                    </label>
+                    <select asp-for="StatusID" class="form-control" asp-items="ViewBag.StatusLists" id="ddlStatus"></select>
+                    <span asp-validation-for="StatusID" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="form-group text-center">
+                    <button type="submit" class="badge rounded-pill btn btn-danger fs-6" onclick="return ValidateSave();">
+                        <i class="bi bi-door-closed"></i> Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<link href="~/lib/sweetalert2.min.css" rel="stylesheet" />
+<script src="~/lib/sweetalert2.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () 
+    {
+        $("#ddlAvailableBookDay").select2();
+        $("#ddlFacilities").select2();
+
+        SetDayOfWeek();
+        SetFacilities();
+    });
+
+    function SetDayOfWeek()
+    {
+        var AvailableDayIdLists = $('#hidAvailableDayId').val().split(',');
+
+        $("#ddlAvailableBookDay").val(AvailableDayIdLists).trigger('change');
+    }
+
+    function SetFacilities()
+    {
+        var FacilitiesIdLists = $('#hidFacilitiesId').val().split(',');
+
+        $("#ddlFacilities").val(FacilitiesIdLists).trigger('change');
+    }
+    
+    function ValidateSave()
+    {
+        debugger;
+        var roomName = $('#txtRoomName').val();
+        var availableBookDay = $('#ddlAvailableBookDay').val();
+        var availableFrom = $('#txtAvailableFrom').val();
+        var availableTo = $('#txtAvailableTo').val();
+        var facilities = $('#ddlFacilities').val();
+        var seat = $('#txtSeat').val();
+        var floor = $('#ddlFloor').val();
+
+        if (roomName == '')
+        {
+            mySweetAlert('','Room Name can not be blank','error',400);
+            $('#txtRoomName').focus();
+            return false;
+        }
+
+        if (availableBookDay == '')
+        {
+            mySweetAlert('', 'Available Book Day can not be blank', 'error', 400);
+            $('#ddlAvailableBookDay').focus();
+            return false;
+        }
+        else
+        {
+            $('#hidAvailableDayId').val(availableBookDay);
+        }
+
+        if (availableFrom == '')
+        {
+            mySweetAlert('', 'Available From can not be blank', 'error', 400);
+            $('#txtAvailableFrom').focus();
+            return false;
+        }
+
+        if(availableTo == '')
+        {
+            mySweetAlert('', 'Available To can not be blank', 'error', 400);
+            $('#txtAvailableTo').focus();
+            return false;
+        }
+
+        if(facilities == '')
+        {
+            mySweetAlert('', 'Facilities can not be blank', 'error', 400);
+            $('#ddlFacilities').focus();
+            return false;
+        }
+        else
+        {
+            $('#hidFacilitiesId').val(facilities);
+        }
+
+        if (seat == '' || parseInt(seat) < 1) 
+        {
+            mySweetAlert('', 'Seat can not be blank or zero', 'error', 400);
+            $('#txtSeat').focus();
+            return false;
+        }
+
+        if (floor == '')
+        {
+            mySweetAlert('', 'Floor can not be blank or zero', 'error', 400);
+            $('#ddlFloor').focus();
+            return false;
+        }
+
+        return true;
+    }
+
+    function mySweetAlert(title, text, icon, width) 
+    {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showCancelButton: false,
+            width: width,
+        });
+    }
+
+</script>
+
+@if (ViewBag.JavaScriptFunction != null)
+{
+    <script type="text/javascript">
+        @Html.Raw(ViewBag.JavaScriptFunction)
+    </script>
+}
+
+<style type="text/css">
+    .select2-container--default .select2-selection--multiple {
+        display: block;
+        width: 100%;
+        background-color: white;
+        background-clip: padding-box;
+        line-height: 1.95;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+        cursor: text;
+        position: relative;
+    }
+</style>
+

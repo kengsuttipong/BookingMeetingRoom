@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "History Page";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-start">
+        <div class="col-lg-10 col-md-12 col-sm-12">
+            <h3 class="text-uppercase fw-bold blog-graphic-text col-2">
+                <i class="bi bi-check-circle"></i> History
+            </h3>
+        </div>
+    </div>
+
+    
+</div>
+
+<button type="button" id="liveToastBtn" style="display: none;"></button>
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="~/images/iRoom.png" width="30" class="rounded me-2" alt="...">
+            <strong class="me-auto">iRoom</strong>
+            <small>just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Your booking has been booked.
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+<script type="text/javascript">
+
+    const toastTrigger = document.getElementById('liveToastBtn')
+    const toastLiveExample = document.getElementById('liveToast')
+    if (toastTrigger) 
+    {
+        toastTrigger.addEventListener('click', () => {
+            const toast = new bootstrap.Toast(toastLiveExample);
+
+            toast.show();
+        })
+    }
+
+    function ClickShowToast()
+    {
+        document.getElementById('liveToastBtn').click();
+    }
+
+</script>
+
+@if (ViewBag.JavaScriptFunction != null)
+{
+    <script type="text/javascript">
+        @Html.Raw(ViewBag.JavaScriptFunction)
+    </script>
+}

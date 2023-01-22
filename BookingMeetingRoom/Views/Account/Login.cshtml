@@ -1,0 +1,85 @@
+﻿@model BookingMeetingRoom.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+ <div class="container">
+     <div class="row justify-content-center">
+        <div class="col-md-offset-12 col-md-5 col-sm-offset-12 col-sm-12">
+            <div class="form-container">
+                <h3 class="title">Login</h3>
+                <form asp-controller="Account" asp-action="Login" class="form-horizontal">
+                    <div class="form-icon">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <div class="form-group">
+                        <span class="input-icon"><i class="bi bi-person"></i></span>
+                        <input asp-for="UserName" placeholder="Username" class="form-control" id="UserName" />
+                        <span class="text-danger" asp-validation-for="UserName"></span>
+                    </div>
+                    <div class="form-group">
+                        <span class="input-icon"><i class="bi bi-key"></i></span>
+                        <input type="password" asp-for="Password" placeholder="Password" class="form-control" id="Password" />
+                        <span class="text-danger" asp-validation-for="Password"></span>
+                    </div>
+
+                    <button type="submit" class="btn signin" onclick="return ValidateLogin();">Login</button>
+                    <a asp-controller="Account" asp-action="Index">For register click here</a>
+                </form>
+            </div>
+         </div>
+     </div>
+</div>
+<link href="~/css/login.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<link href="~/lib/sweetalert2.min.css" rel="stylesheet" />
+<script src="~/lib/sweetalert2.min.js"></script>
+
+<script type="text/javascript">
+
+    function ValidateLogin() 
+    {
+        var username = document.getElementById('UserName').value;
+        var password = document.getElementById('Password').value;
+
+        if (username == '') 
+        {
+            mySweetAlert('','Username can not be blank.', 'error', 400);
+
+            return false;
+        }
+
+        if (password == '') 
+        {
+            mySweetAlert('', 'Password can not be blank.', 'error', 400);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    function mySweetAlert(title, text, icon, width) 
+    {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showCancelButton: false,
+            width: width,
+        });
+    }
+
+</script>
+
+
